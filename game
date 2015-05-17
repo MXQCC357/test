@@ -1,0 +1,135 @@
+第一个文件：
+public class Computer {
+	String name;
+	int score;
+	public int showfist(){
+		int quan;
+		quan=(int)(Math.random()*10);
+		if(quan<=2){
+			quan=1;
+		}else if(quan<=5){
+			quan=2;
+		}else{
+			quan=3;
+		}
+		switch(quan){
+			case 1:System.out.println(name+"出拳：剪刀");break;
+			case 2:System.out.println(name+"出拳：石头");break;
+			case 3:System.out.println(name+"出拳：布");break;
+		}
+		return quan;
+	}
+}
+
+第二个文件：
+import java.util.Scanner;
+
+public class Game {
+	int count=0;
+	int countP=0;
+	Person person=new Person();
+	Computer computer=new Computer();
+	Scanner input=new Scanner(System.in);
+	public void initial(){
+		System.out.print("请选择你的角色(1.刘备  2.孙权  3.曹操):");
+		int juese=input.nextInt();
+		switch(juese){
+			case 1:person.name="刘备";
+				break;
+			case 2:person.name="孙权";
+				break;
+			case 3:person.name="曹操";
+				break;
+		}
+		System.out.print("请选择对手角色(1.关羽  2.张飞  3.赵云):");
+		int JueSe=input.nextInt();
+		switch(JueSe){
+			case 1:computer.name="关羽";
+				break;
+			case 2:computer.name="张飞";
+				break;
+			case 3:computer.name="赵云";
+				break;
+		}
+	}
+	public void begin(){
+		System.out.print("\n要开始吗？ (y/n)");
+		String ans=input.next();
+		if(ans.equals("y")){
+			String answ;
+			do{
+				int a=person.showFist();
+				int b=computer.showfist();
+				if(a==1&&b==3||a==2&&b==1||a==3&&b==2){
+					System.out.println("结果：你赢了！");
+					person.score++;
+				}else if(a==1&&b==1||a==2&&b==2||a==3&&b==3){
+					System.out.println("结果：平局");
+					countP++;
+				}else{
+					System.out.println("结果：你输了！");
+					computer.score++;
+				}
+				count++;
+				System.out.print("\n是否开始下一轮?  (y/n)");
+			    answ=input.next();
+			}while(answ.equals("y"));
+		}
+	}
+	public String calcResult(){
+		String a;
+		if(person.score>computer.score){
+			a="最终结果：恭喜恭喜！你赢了！";
+		}else if(person.score==computer.score){
+			a="最终结果：打成平手!";
+		}else{
+			a="最终结果：呵呵，你输了！";
+		}
+		return a;
+	}
+	public void showResult(){
+		System.out.println("---------------------------------------------------");
+		System.out.println("\t\t"+person.name+"  VS  "+computer.name+"\n");
+		System.out.println("对战次数："+count+"次");
+		System.out.println("平局："+countP+"次");
+		System.out.println(person.name+"得："+person.score+"分");
+		System.out.println(computer.name+"得："+computer.score+"分\n");
+		System.out.println(calcResult());
+		System.out.println("---------------------------------------------------");
+	}
+}
+
+
+第三个文件：
+import java.util.Scanner;
+
+public class Person {
+	String name;
+	int score;
+	Scanner input=new Scanner(System.in);
+	public int showFist(){
+		System.out.print("\n请出拳：1.剪刀2.石头3.布");
+		int quan=input.nextInt();
+		switch(quan){
+		case 1:System.out.println("你出拳：剪刀");break;
+		case 2:System.out.println("你出拳：石头");break;
+		case 3:System.out.println("你出拳：布");break;
+		}
+		return quan;
+	}
+}
+
+第四个文件：
+public class Test {
+	public static void main(String[]args){
+		Game g=new Game();
+		System.out.println("-----------------欢迎进入游戏世界--------------------\n\n");
+		System.out.println("\t\t******************");
+		System.out.println("\t\t**  猜拳  开始  **");
+		System.out.println("\t\t******************\n\n");
+		System.out.println("出拳规则：1.剪刀2.石头3.布");
+		g.initial();
+		g.begin();
+		g.showResult();
+		}
+	}
